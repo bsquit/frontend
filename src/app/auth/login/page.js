@@ -39,36 +39,31 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-200 flex flex-col">
-      {/* Navbar */}
       <nav className="w-full flex items-center justify-between px-8 py-4 fixed top-0 bg-transparent z-10">
-        {/* Left Side (Logo) */}
         <div className="flex items-center gap-2">
           <img src="/LOGO.png" alt="logo" className="w-12 h-auto" />
         </div>
 
-        {/* Center (LC SIGN) */}
         <div className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-semibold">
           LC SIGN
         </div>
 
-        {/* Right Side (Buttons) */}
         <div className="flex gap-4">
           <button
-            onClick={() => router.push("/login")}
-            className="px-6 py-2 rounded-full font-medium bg-gray-400"
+            onClick={() => router.push("/auth/login")}
+            className="px-6 py-2 rounded-full font-medium bg-gray-400 hover:bg-gray-500 transition-all duration-300 ease-in-out"
           >
             Sign In
           </button>
           <button
-            onClick={() => router.push("/register")}
-            className="px-6 py-2 rounded-full font-medium bg-white/60 hover:bg-gray-300"
+            onClick={() => router.push("/auth/register")}
+            className="px-6 py-2 rounded-full font-medium bg-white/60 hover:bg-gray-300 transition-all duration-300 ease-in-out"
           >
             Sign Up
           </button>
         </div>
       </nav>
 
-      {/* Wrapper */}
       <div className="flex justify-center items-center flex-1">
         <div className="w-[512px]">
           <form
@@ -80,14 +75,13 @@ export default function LoginPage() {
               Don't have an account?
               <button
                 type="button"
-                onClick={() => router.push("/register")}
+                onClick={() => router.push("/auth/register")}
                 className="ml-1 text-black font-medium underline"
               >
                 Sign Up
               </button>
             </span>
 
-            {/* Email */}
             <div className="relative w-full mb-4">
               <BiEnvelope className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-500 text-xl" />
               <input
@@ -101,7 +95,6 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Password */}
             <div className="relative w-full mb-4">
               <BiLockAlt className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-500 text-xl" />
               <input
@@ -115,15 +108,13 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-gray-300 hover:bg-gray-400 py-3 rounded-full font-semibold"
+              className="w-full bg-gray-300 hover:bg-gray-400 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out"
             >
               Sign In
             </button>
 
-            {/* Terms */}
             <div className="text-xs text-center mt-4">
               <input type="checkbox" className="mr-2" />
               I agree to the{" "}
@@ -134,6 +125,6 @@ export default function LoginPage() {
           </form>
         </div>
       </div>
-    </div>
-  );
+    </div>
+  );
 }
