@@ -1,5 +1,9 @@
 // import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -19,9 +23,29 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const username = "Justin";
+  const LogoImage = '/LOGO.png'
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        
+          
+        <header
+         className="text-right p-4 flex justify-between bg-gradient-to-br from-orange-400 to-orange-700 items-center drop-shadow-lg">
+          <Image src={LogoImage} width={100} height={100} alt="logo"/>
+          <div className="text-white">Logged in as <br /><span className="font-bold text-2xl">{username}</span></div>
+        </header>
+        <SidebarProvider >
+          <AppSidebar />
+            <SidebarTrigger />
+            {children}
+        </SidebarProvider>
+        {/* <footer className="">
+          Bye World
+        </footer> */}
+        
+      </body>
     </html>
   );
 }

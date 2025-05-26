@@ -1,0 +1,32 @@
+{
+  "tickets": [
+    {
+      "id": 1,
+      "subject": "Lights not working",
+      "agent": "Agent 1",
+      "status": "Ongoing",
+      "lastMessage": "I'll see how it goes"
+    },
+    {
+      "id": 2,
+      "subject": "Purchase taking a long time",
+      "agent": "Agent 2",
+      "status": "Finished",
+      "lastMessage": "Thank you"
+    },
+    {
+      "id": 3,
+      "subject": "Login Issue",
+      "agent": "Agent 3",
+      "status": "Ongoing",
+      "lastMessage": "Can you provide a screenshot?"
+    },
+    {
+      "id": 4,
+      "subject": "Delayed delivery",
+      "agent": "Agent 4",
+      "status": "Ongoing",
+      "lastMessage": "Where is my delivery?"
+    }
+  ]
+} 
