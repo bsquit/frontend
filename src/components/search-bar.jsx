@@ -13,7 +13,7 @@ export function SearchBar({ onSearch, placeholder = "Search..." }) {
         type="text"
         placeholder={placeholder}
         onChange={handleSearch}
-        className="pl-10 bg-white border-2 p-4 rounded-2xl drop-shadow-lg"
+        className="pl-10 bg-white border-2 p-6 rounded-2xl drop-shadow-lg"
       />
     </div>
   );

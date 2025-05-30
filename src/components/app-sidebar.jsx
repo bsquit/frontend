@@ -1,5 +1,6 @@
 import { Calendar, Home, Inbox, Search, Settings, ShoppingCart, Ticket, Plus } from "lucide-react"
- 
+import Image from "next/image";
+
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +12,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
  
+
+
 // Menu items.
 const items = [
   {
@@ -46,6 +49,8 @@ const items = [
 ]
  
 export function AppSidebar() {
+  const LogoImage = '/LOGO.png'
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -53,6 +58,10 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
+              <div className="bg-amber-500 p-5 rounded-2xl flex justify-center">
+                <Image src={LogoImage} width={100} height={100} alt="logo"/>
+                </div>
+              
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>

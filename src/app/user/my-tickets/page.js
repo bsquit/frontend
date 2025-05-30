@@ -75,7 +75,7 @@ export default function MyTickets() {
   return (
     <>
     <div className="w-full">
-      <p>Showing All Tickets</p>
+      {/* <p>Showing All Tickets</p> */}
       <div className="flex items-center">
         <SearchBar onSearch={handleSearch} placeholder="Search tickets..." />
         <button onClick={() => setShowFilter(true)} className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-2xl h-14 p-4 m-4 w-36 flex items-center justify-center gap-2">
