@@ -44,9 +44,9 @@ export default function CreateNewTicketPage() {
         </div><br/>
         <button 
           type="submit" 
-          className="rounded-lg p-2 my-2 bg-gradient-to-br from-white to-orange-300 hover:from-white hover:to-orange-400 w-24 transition-all duration-200"
+          className="rounded-lg p-2 my-2 bg-gradient-to-br from-orange-300 to-orange-500 hover:from-orange-300 hover:to-orange-600 w-24 font-bold drop-shadow-black text-white transition-all duration-200"
         >
-          Submit
+          SUBMIT
         </button>
       </form>
     </div>

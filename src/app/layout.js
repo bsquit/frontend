@@ -34,6 +34,7 @@ export default function RootLayout({ children }) {
         <header
          className="text-right p-4 flex justify-between bg-gradient-to-br from-orange-400 to-orange-700 items-center drop-shadow-lg">
           <Image src={LogoImage} width={100} height={100} alt="logo"/>
+          <span className="font-bold text-white text-3xl">LC SIGN HELPDDESK</span>
           <div className="text-white">Logged in as <br /><span className="font-bold text-2xl">{username}</span></div>
         </header>
         <SidebarProvider >
