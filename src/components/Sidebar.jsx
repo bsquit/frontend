@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { HiOutlineTicket, HiOutlineShoppingCart } from "react-icons/hi2";
-import { MdOutlineDashboard, MdSettings } from "react-icons/md"; // Example admin icons
-import { FiUsers } from "react-icons/fi"; // Example admin icon
+import { MdOutlineDashboard, MdSettings } from "react-icons/md";
+import { FiUsers } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { getUser } from "@/utils/auth";
@@ -56,7 +56,7 @@ export default function Sidebar() {
   ];
 
   if (!mounted) {
-    return null; // Or a loading skeleton for the sidebar
+    return null;
   }
 
   let activeMenu = [];
