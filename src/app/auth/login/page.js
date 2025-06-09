@@ -1,129 +1,113 @@
 "use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { BiEnvelope, BiLockAlt } from "react-icons/bi";
 
-export default function LoginPage() {
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { isLoggedIn, isTokenExpired } from "@/utils/auth";
+
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
-  });
+  // console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+  useEffect(() => {
+    // If user is already logged in and token is not expired, redirect to dashboard
+    if (isLoggedIn() && !isTokenExpired()) {
+      router.replace("/dashboard");
+    }
+  }, [router]);
 
-  const handleLoginSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
-      });
+    setError("");
 
-      if (response.ok) {
-        const data = await response.json();
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_AUTH_URL}/signin`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = response.data;
+
+      if (response.status === 200) {
         localStorage.setItem("token", data.token);
-        console.log("Login successful:", data);
-        router.push("/tickets");
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        // Redirect to dashboard
+        router.push("/dashboard");
       } else {
-        console.error("Login failed");
+        setError(data.message || "Invalid email or password");
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err) {
+      setError("An unexpected error occurred");
+      console.error(err);
     }
   };
 
-  const handleLoginChange = (e) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-200 flex flex-col">
-      <nav className="w-full flex items-center justify-between px-8 py-4 fixed top-0 bg-transparent z-10">
-        <div className="flex items-center gap-2">
-          <img src="/LOGO.png" alt="logo" className="w-12 h-auto" />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Sign in to your account
+          </h2>
         </div>
-
-        <div className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-semibold">
-          LC SIGN
-        </div>
-
-        <div className="flex gap-4">
-          <button
-            onClick={() => router.push("/auth/login")}
-            className="px-6 py-2 rounded-full font-medium bg-gray-400 hover:bg-gray-500 transition-all duration-300 ease-in-out"
-          >
-            Sign In
-          </button>
-          <button
-            onClick={() => router.push("/auth/register")}
-            className="px-6 py-2 rounded-full font-medium bg-white/60 hover:bg-gray-300 transition-all duration-300 ease-in-out"
-          >
-            Sign Up
-          </button>
-        </div>
-      </nav>
-
-      <div className="flex justify-center items-center flex-1">
-        <div className="w-[512px]">
-          <form
-            onSubmit={handleLoginSubmit}
-            className="bg-white rounded-2xl p-8 shadow-md"
-          >
-            <h2 className="text-3xl font-semibold text-center mb-4">Login</h2>
-            <span className="text-sm flex justify-center mb-4">
-              Don't have an account?
-              <button
-                type="button"
-                onClick={() => router.push("/auth/register")}
-                className="ml-1 text-black font-medium underline"
-              >
-                Sign Up
-              </button>
-            </span>
-
-            <div className="relative w-full mb-4">
-              <BiEnvelope className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-500 text-xl" />
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email" className="sr-only">
+                Email address
+              </label>
               <input
-                type="email"
+                id="email"
                 name="email"
-                placeholder="Email"
-                value={loginData.email}
-                onChange={handleLoginChange}
+                type="email"
+                autoComplete="email"
                 required
-                className="w-full bg-gray-100 border border-gray-300 rounded-full py-3 pl-12 pr-4"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-
-            <div className="relative w-full mb-4">
-              <BiLockAlt className="absolute top-1/2 left-4 transform -translate-y-1/2 text-gray-500 text-xl" />
+            <div>
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
               <input
-                type="password"
+                id="password"
                 name="password"
-                placeholder="Password"
-                value={loginData.password}
-                onChange={handleLoginChange}
+                type="password"
+                autoComplete="current-password"
                 required
-                className="w-full bg-gray-100 border border-gray-300 rounded-full py-3 pl-12 pr-4"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+          </div>
 
+          {error && (
+            <div className="text-red-500 text-sm text-center">{error}</div>
+          )}
+
+          <div>
             <button
               type="submit"
-              className="w-full bg-gray-300 hover:bg-gray-400 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Sign In
+              Sign in
             </button>
-
-            <div className="text-xs text-center mt-4">
-              <input type="checkbox" className="mr-2" />
-              I agree to the{" "}
-              <a href="#" className="underline">
-                Terms & Conditions
-              </a>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );
